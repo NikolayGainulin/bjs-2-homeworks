@@ -64,5 +64,4 @@ describe("Домашнее задание к занятию 4 «Объекты»
     expect(student.marks).toBeUndefined();
     expect(student.getAverage()).toEqual(0);
   });
-
 });
