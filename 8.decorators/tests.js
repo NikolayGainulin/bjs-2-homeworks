@@ -5,7 +5,6 @@ describe("Домашнее задание к занятию 8 «Функции �
     let upgAdd2;
     let upgMultiply3;
 
-
     beforeEach(function(){
       upgAdd2 = cachingDecoratorNew(add2);
       upgMultiply3 = cachingDecoratorNew(multiply3);
@@ -33,7 +32,7 @@ describe("Домашнее задание к занятию 8 «Функции �
       expect(upgMultiply3(2, 2, 3)).toEqual("Вычисляем: 12");
       expect(upgMultiply3(2, 2, 4)).toEqual("Вычисляем: 16"); // должно заново вычисляться
     });
-  });
+});
 
   describe("Задача №2 Усовершенствованный декоратор отложенного вызова", () => {
     
