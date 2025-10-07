@@ -27,33 +27,31 @@ function cachingDecoratorNew(func) {
 
 //Задача № 2
 function debounceDecoratorNew(func, delay) {
-    let timeoutId = null;
-    let count = 0;
-    let allCount = 0;
+  let timeoutId = null;
+  
+  function wrapper(...args) {
+    wrapper.allCount++; // увеличиваем счетчик всех вызовов
     
-    function wrapper(...args) {
-      allCount++; // увеличиваем счетчик всех вызовов
-      
-      if (timeoutId === null) {
-        // Первый вызов - выполняем моментально
-        func.apply(this, args);
-        count++; // увеличиваем счетчик выполненных вызовов
-      } else {
-        // Отменяем предыдущий запланированный вызов
-        clearTimeout(timeoutId);
-      }
-      
-      // Планируем следующий вызов
-      timeoutId = setTimeout(() => {
-        func.apply(this, args);
-        count++; // увеличиваем счетчик выполненных вызовов
-        timeoutId = null; // сбрасываем идентификатор таймера
-      }, delay);
+    if (timeoutId === null) {
+      // Первый вызов - выполняем моментально
+      func.apply(this, args);
+      wrapper.count++; // увеличиваем счетчик выполненных вызовов
+    } else {
+      // Отменяем предыдущий запланированный вызов
+      clearTimeout(timeoutId);
     }
     
-    // Добавляем свойства для подсчета вызовов
-    wrapper.count = count;
-    wrapper.allCount = allCount;
-    
-    return wrapper;
+    // Планируем следующий вызов
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+      wrapper.count++; // увеличиваем счетчик выполненных вызовов
+      timeoutId = null; // сбрасываем идентификатор таймера
+    }, delay);
   }
+  
+  // Инициализируем свойства функции
+  wrapper.count = 0;
+  wrapper.allCount = 0;
+  
+  return wrapper;
+}
